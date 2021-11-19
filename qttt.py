@@ -10,3 +10,33 @@ currentPlayer = "X"  # switches depending on whose turn it is
 moves = []  # will be a list of [player, square1, square2, turnNum, classicalOrQuantum] for each move
 
 
+# Visualize the board
+def visualizeBoard(state):
+    maxLen = max([len(item) for item in state]) + 2
+    if maxLen % 2 == 1:
+        maxLen += 1
+    height = maxLen // 2
+    if height % 2 == 0:
+        height += 1
+    row1 = "|".join([item.center(maxLen) for item in state[:3]])
+    row2 = "|".join([item.center(maxLen) for item in state[3:6]])
+    row3 = "|".join([item.center(maxLen) for item in state[6:]])
+
+    for _ in range(height // 2):
+        print(" "*maxLen + "|" + " "*maxLen + "|" + " "*maxLen)
+    print(row1)
+    for _ in range(height // 2):
+        print(" "*maxLen + "|" + " "*maxLen + "|" + " "*maxLen)
+    print("—"*(maxLen*3 + 2))
+    for _ in range(height // 2):
+        print(" "*maxLen + "|" + " "*maxLen + "|" + " "*maxLen)
+    print(row2)
+    for _ in range(height // 2):
+        print(" "*maxLen + "|" + " "*maxLen + "|" + " "*maxLen)
+    print("—"*(maxLen*3 + 2))
+    for _ in range(height // 2):
+        print(" "*maxLen + "|" + " "*maxLen + "|" + " "*maxLen)
+    print(row3)
+    for _ in range(height // 2):
+        print(" "*maxLen + "|" + " "*maxLen + "|" + " "*maxLen)
+
