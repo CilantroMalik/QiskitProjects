@@ -64,3 +64,24 @@ def hasLoop(moveList):
             return moveset
     return None
 
+# ----------------------
+# Extract some functions for clarity and readability in game loop
+# ----------------------
+
+
+# Display game state
+def showState():
+    os.system("clear")
+    visualizeBoard(board)
+    getConnections(moves)
+
+
+# End of turn tasks
+def endTurn(currPlayer, turnNum):
+    # Switch player
+    if currPlayer == "X":
+        currPlayer = "O"
+    else:
+        currPlayer = "X"
+        turnNum += 1
+    return currPlayer, turnNum
