@@ -53,3 +53,14 @@ def getConnections(moveList):
     if len(connections) % 3 != 0:
         print("\n")
 
+
+# Check if a closed cyclic loop exists in a game state
+
+def hasLoop(moveList):
+    for moveset in itertools.combinations([move for move in moveList if move[4] != "C"], 3):
+        if len(set(moveset[0][1:3] + moveset[1][1:3] + moveset[2][1:3])) == 3:
+            toPrint = [f"{move[0]}: {move[1]}—{move[2]}" for move in moveset]
+            print(f"Loop created: {'; '.join(toPrint)}")
+            return moveset
+    return None
+
