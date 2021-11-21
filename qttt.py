@@ -40,3 +40,16 @@ def visualizeBoard(state):
     for _ in range(height // 2):
         print(" "*maxLen + "|" + " "*maxLen + "|" + " "*maxLen)
 
+
+# Display all moves so far in the game
+
+def getConnections(moveList):
+    print("\n—————— Move List ——————")
+    connections = []
+    for move in moveList:
+        connections.append(f"{move[0]}: {move[1]}—{move[2]}")
+    for i, conn in enumerate(connections):
+        print(conn, end=";\n" if i % 3 == 2 else "; ")
+    if len(connections) % 3 != 0:
+        print("\n")
+
