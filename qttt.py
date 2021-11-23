@@ -115,3 +115,25 @@ def isGameOver():
         return True
     else:
         return False
+
+
+# Creating the main game loop
+winner = ""  # will be populated with "X" or "O"
+multipleCompletions = False  # if more than one three-in-a-row was completed at the same time on the winning move
+
+while winner == "":
+    showState()  # show state at the start of each turn
+    print("\n———————————————————————")
+    print("1|2|3")  # Show the layout of the board for reference
+    print("—————")
+    print("4|5|6")
+    print("—————")
+    print("7|8|9")
+    # Get for the current player's move
+    squares = input(f"Player {currentPlayer} — choose two squares for your superposed piece (two numbers, separated by a space): ").split(" ")
+    squares[0], squares[1] = int(squares[0]), int(squares[1])  # parse the strings into integers
+    # Add the move to the list of moves and change the board state
+    moves.append([f"{currentPlayer}", squares[0], squares[1], turnNumber, "Q"])
+    board[squares[0]-1] += ("/" if board[squares[0]-1] != "" else "") + f"{currentPlayer}{turnNumber}"
+    board[squares[1]-1] += ("/" if board[squares[1]-1] != "" else "") + f"{currentPlayer}{turnNumber}"
+    showState()  # Show updated state after each move
