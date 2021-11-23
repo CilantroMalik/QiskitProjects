@@ -85,3 +85,33 @@ def endTurn(currPlayer, turnNum):
         currPlayer = "X"
         turnNum += 1
     return currPlayer, turnNum
+
+
+# Check whether game is won
+def isGameOver():
+    global winner
+    triplesToCheck = [(0, 1, 2), (3, 4, 5), (6, 7, 8), (0, 3, 6), (1, 4, 7), (2, 5, 8), (0, 4, 8), (2, 4, 6)]
+    winningTriples = []
+    for triple in triplesToCheck:
+        if "[X" in board[triple[0]] and "[X" in board[triple[1]] and "[X" in board[triple[2]]:
+            winner += "X"
+            winningTriples.append(triple)
+        if "[O" in board[triple[0]] and "[O" in board[triple[1]] and "[O" in board[triple[2]]:
+            winner += "O"
+            winningTriples.append(triple)
+    if len(winner) > 1:
+        minSumOfIndices, winningPlayer = 9999, ""
+        for player, triple in zip(list(winner), winningTriples):
+            sumOfIndices = 0
+            for sq in triple:
+                start = board[sq].find(f"[{player}")
+                sumOfIndices += int(board[sq][start+2:board[sq].find("]", start)])
+            if sumOfIndices < minSumOfIndices:
+                minSumOfIndices = sumOfIndices
+                winningPlayer = player
+            elif sumOfIndices == minSumOfIndices:
+                winningPlayer += player
+        winner = winningPlayer
+        return True
+    else:
+        return False
