@@ -137,3 +137,16 @@ while winner == "":
     board[squares[0]-1] += ("/" if board[squares[0]-1] != "" else "") + f"{currentPlayer}{turnNumber}"
     board[squares[1]-1] += ("/" if board[squares[1]-1] != "" else "") + f"{currentPlayer}{turnNumber}"
     showState()  # Show updated state after each move
+    # Check for a loop, and if one exists, prompt a collapse by the player who did not just create the loop
+    loop = hasLoop(moves)
+    if loop is not None:
+        involvedSquares = set(loop[0][1:3] + loop[1][1:3] + loop[2][1:3])  # what 3 squares are involved in this collapse?
+        collapseSquare = int(input(f"Player {'X' if currentPlayer == 'O' else 'O'} — choose a square in the loop ({str(involvedSquares)[1:-1]}) to collapse: "))
+        # isolate the two relevant markers in the chosen square, then let the player pick which one stays
+        relevantSquares = [f"{move[0]}{move[3]}" for move in loop if collapseSquare in move[1:-2]]
+        relevantLocations = [(move[1], move[2]) for move in loop if collapseSquare in move[1:-2]]
+        collapseChoice = input(f"Player {'X' if currentPlayer == 'O' else 'O'} — pick which marker stays in this square ({relevantSquares[0]} or {relevantSquares[1]}): ")
+        if collapseChoice == relevantSquares[0]:
+            involvedSquares.remove(collapseSquare)
+            board[collapseSquare-1] = board[collapseSquare-1].replace(relevantSquares[1], "")  # remove the other marker
+            board[collapseSquare-1] = board[collapseSquare-1].replace(relevantSquares[0], f"[{relevantSquares[0]}]")  # mark the chosen one as collapsed
