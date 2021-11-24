@@ -150,3 +150,19 @@ while winner == "":
             involvedSquares.remove(collapseSquare)
             board[collapseSquare-1] = board[collapseSquare-1].replace(relevantSquares[1], "")  # remove the other marker
             board[collapseSquare-1] = board[collapseSquare-1].replace(relevantSquares[0], f"[{relevantSquares[0]}]")  # mark the chosen one as collapsed
+            for loc in relevantLocations[0]:
+                if loc != collapseSquare:
+                    board[loc-1] = board[loc-1].replace(relevantSquares[0], "")  # remove chosen marker from its other location
+            for square in involvedSquares:  # the other marker is also fixed now, in its other possible square
+                if relevantSquares[1] in board[square-1]:
+                    board[square-1] = board[square-1].replace(relevantSquares[1], f"[{relevantSquares[1]}]")
+                    involvedSquares.remove(square)
+                    break
+            # now only one square left, and that needs to contain the unused marker of the relevant ones
+            lastSquare = involvedSquares.pop()
+            for move in loop:
+                if collapseSquare not in move[1:3]:
+                    board[lastSquare-1] = board[lastSquare-1].replace(f"{move[0]}{move[3]}", f"[{move[0]}{move[3]}]")
+                    for sq in move[1:3]:
+                        if sq != lastSquare:
+                            board[sq-1] = board[sq-1].replace(f"{move[0]}{move[3]}", "")  # and finally remove the third marker from its other place
