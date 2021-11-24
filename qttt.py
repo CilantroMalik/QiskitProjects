@@ -166,3 +166,16 @@ while winner == "":
                     for sq in move[1:3]:
                         if sq != lastSquare:
                             board[sq-1] = board[sq-1].replace(f"{move[0]}{move[3]}", "")  # and finally remove the third marker from its other place
+
+            # clean up board of extraneous slashes
+            for i, sq in enumerate(board):
+                if sq.startswith("/"):
+                    board[i] = board[i][1:]
+                if sq.endswith("/"):
+                    board[i] = board[i][:-1]
+
+            # turn the involved moves to classical tokens and show the board
+            for move in moves:
+                if move in loop:
+                    move[4] = "C"
+            showState()
