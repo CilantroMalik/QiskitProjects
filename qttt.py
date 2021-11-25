@@ -207,3 +207,21 @@ while winner == "":
                     board[i] = board[i][1:]
                 if sq.endswith("/"):
                     board[i] = board[i][:-1]
+
+            # turn the involved moves to classical tokens and show the board
+            for move in moves:
+                if move in loop:
+                    move[4] = "C"
+            showState()
+
+    currentPlayer, turnNumber = endTurn(currentPlayer, turnNumber)
+    print("\n———————————————————————")
+    multipleCompletions = isGameOver()
+
+if len(winner) > 1:
+    print(f"Both players completed a tic-tac-toe with equal sums of piece indices: the game is a draw!")
+else:
+    if multipleCompletions:
+        print(f"Both players completed a tic-tac-toe, but player {winner} wins because they had the smallest sum of piece indices!")
+    else:
+        print(f"Player {winner} has completed a tic-tac-toe!")
