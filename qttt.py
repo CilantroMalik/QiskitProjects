@@ -192,3 +192,18 @@ while winner == "":
                     board[square-1] = board[square-1].replace(relevantSquares[0], f"[{relevantSquares[0]}]")
                     involvedSquares.remove(square)
                     break
+
+            lastSquare = involvedSquares.pop()
+            for move in loop:
+                if collapseSquare not in move[1:3]:
+                    board[lastSquare-1] = board[lastSquare-1].replace(f"{move[0]}{move[3]}", f"[{move[0]}{move[3]}]")
+                    for sq in move[1:3]:
+                        if sq != lastSquare:
+                            board[sq-1] = board[sq-1].replace(f"{move[0]}{move[3]}", "")  # and finally remove the third marker from its other place
+
+            # clean up board of extraneous slashes
+            for i, sq in enumerate(board):
+                if sq.startswith("/"):
+                    board[i] = board[i][1:]
+                if sq.endswith("/"):
+                    board[i] = board[i][:-1]
