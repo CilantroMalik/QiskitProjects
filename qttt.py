@@ -179,3 +179,16 @@ while winner == "":
                 if move in loop:
                     move[4] = "C"
             showState()
+        else:
+            involvedSquares.remove(collapseSquare)
+            board[collapseSquare-1] = board[collapseSquare-1].replace(relevantSquares[0], "")  # remove the other marker
+            board[collapseSquare-1] = board[collapseSquare-1].replace(relevantSquares[1], f"[{relevantSquares[1]}]")  # mark the chosen one as collapsed
+            for loc in relevantLocations[1]:
+                if loc != collapseSquare:
+                    board[loc-1] = board[loc-1].replace(relevantSquares[1],
+                                                            "")  # remove chosen marker from its other location
+            for square in involvedSquares:  # the other marker is also fixed now, in its other possible square
+                if relevantSquares[0] in board[square-1]:
+                    board[square-1] = board[square-1].replace(relevantSquares[0], f"[{relevantSquares[0]}]")
+                    involvedSquares.remove(square)
+                    break
