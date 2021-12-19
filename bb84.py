@@ -19,3 +19,18 @@ def encodeMessage(bits, bases):
         qc.barrier()
         message.append(qc)
     return message
+
+
+def measureMessage(messageBits, bases):
+    sim = Aer.get_backend("aer_simulator")
+    meas = []
+    for messageBit, base in zip(messageBits, bases):
+        if base == 0:
+            messageBit.measure(0, 0)
+        else:
+            messageBit.h(0)
+            messageBit.measure(0, 0)
+        qobj = assemble(messageBit, shots=1, memory=True)
+        meas.append(int(sim.run(qobj).result().get_memory()[0]))
+    return meas
+
