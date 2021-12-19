@@ -34,3 +34,11 @@ def measureMessage(messageBits, bases):
         meas.append(int(sim.run(qobj).result().get_memory()[0]))
     return meas
 
+
+def pruneInvalid(aBases, bBases, bits):
+    validBits = []
+    for aliceBase, bobBase, bit in zip(aBases, bBases, bits):
+        if aliceBase == bobBase:
+            validBits.append(bit)
+    return validBits
+
