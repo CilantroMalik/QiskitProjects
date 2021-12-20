@@ -42,3 +42,10 @@ def pruneInvalid(aBases, bBases, bits):
             validBits.append(bit)
     return validBits
 
+
+def sampleBits(bits, sampleIndices):
+    sampled = []
+    for i in sampleIndices:
+        sampled.append(bits.pop(mod(i, len(bits))))
+    return sampled
+
