@@ -60,3 +60,10 @@ def bb84(n, sampleSize, interception=False):
     if interception:
         eveBases = [randint(0, 1) for _ in range(n)]
         intercepted = measureMessage(message, eveBases)
+
+    bobBases = [randint(0, 1) for _ in range(n)]
+    bobResults = measureMessage(message, bobBases)
+
+    aliceKey = pruneInvalid(aliceBases, bobBases, aliceBits)
+    bobKey = pruneInvalid(aliceBases, bobBases, bobResults)
+
