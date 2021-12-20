@@ -49,3 +49,14 @@ def sampleBits(bits, sampleIndices):
         sampled.append(bits.pop(mod(i, len(bits))))
     return sampled
 
+
+# Parametrized function for the entire BB84 quantum key distribution protocol
+
+def bb84(n, sampleSize, interception=False):
+    aliceBits = [randint(0, 1) for _ in range(n)]
+    aliceBases = [randint(0, 1) for _ in range(n)]
+    message = encodeMessage(aliceBits, aliceBases)
+
+    if interception:
+        eveBases = [randint(0, 1) for _ in range(n)]
+        intercepted = measureMessage(message, eveBases)
