@@ -67,3 +67,15 @@ def bb84(n, sampleSize, interception=False):
     aliceKey = pruneInvalid(aliceBases, bobBases, aliceBits)
     bobKey = pruneInvalid(aliceBases, bobBases, bobResults)
 
+    sampledBits = sample(range(n), sampleSize)
+
+    aliceSample = sampleBits(aliceKey, sampledBits)
+    bobSample = sampleBits(bobKey, sampledBits)
+
+    if aliceSample == bobSample:
+        if interception:
+            print("Interception went undetected!")
+            return None
+        else:
+            print("Protocol successful!")
+            return aliceKey
