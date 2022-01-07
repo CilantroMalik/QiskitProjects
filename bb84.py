@@ -79,3 +79,13 @@ def bb84(n, sampleSize, interception=False):
         else:
             print("Protocol successful!")
             return aliceKey
+    else:
+        if interception:
+            print("Sample mismatch, interception occurred.")
+            print(f"Chance of undetected interception: {0.75**sampleSize * 100}%")
+        else:
+            print("Protocol unsuccessful, most likely due to noise in the channel.")
+        return None
+
+
+bb84(100, 40, True)
